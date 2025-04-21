@@ -9,7 +9,7 @@ eta=0.5
 num_part=4096 # number of particles
 ntasks=1    # number of processors used in mpirun -np M before 
 lj_cut=1.12
-
+time=""
 for coul_cut in 0.0 10.0; do
     for mult in 2 4 8 16; do
         N=$(( mult *  num_part ))
@@ -18,9 +18,10 @@ for coul_cut in 0.0 10.0; do
         echo "Creating SLURM script in $dir_name"
 
         # longer runtime for coulombic interactions
-        if [ "$coul_cut" -eq "0.0"] then
+        if [[ "echo ${coul_cut} == 10.0 | bc -l" ]]
+        then
             time="08:00:00"
-        else
+        else 
             time="01:00:00"
         fi
         cat > "$slurm_script" <<EOL
