@@ -21,7 +21,7 @@ for  eta in 0.7 0.6 0.5 0.4; do
 
 module load LAMMPS/23Jun2022-foss-2021b-kokkos
 
-srun lmp -screen out.lammps -in $lammps_script_location -v T $temperature ETA $eta
+srun lmp -screen out.lammps -in $lammps_script_location -v T $temperature -v ETA $eta
 
 # Uncomment when testing locally
 # lmp -screen out.lammps -in $lammps_script_location -v T $temperature -v ETA $eta
