@@ -7,8 +7,10 @@ boundary 	    p p p
 
 # Variables
 variable 	    N equal 4096    # number of particles
-variable 	    eta equal 0.45   # packing fraction
-variable 	    temp equal 1.0  # temperature
+variable 	    eta equal ${eta}   # packing fraction
+
+# set temp equal to the variable T, which is passed from the command line
+variable 	    temp equal ${T}  # temperature
 
 variable 	    sigma equal 1.0
 variable 	    particle_volume equal (4.0/3.0)*PI*(0.5*${sigma})^3  
