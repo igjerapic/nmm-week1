@@ -1,0 +1,113 @@
+\documentclass[10pt,a4paper,onecollum]{labreport}
+\usepackage{csquotes}
+\usepackage{titlesec}
+\usepackage{ragged2e}
+\usepackage{siunitx}
+\usepackage{setspace}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{xurl}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tabularray}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{lscape}
+\usepackage{tensor}
+\usepackage{multirow}
+\usepackage{chemformula}
+\usepackage[gen]{eurosym}
+\usepackage{float}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{enumerate}
+\usepackage[justification=centering]{caption}
+\usepackage[nottoc]{tocbibind}
+%  \usepackage[
+% backend=biber,
+% style=chem-acs,articletitle=true,doi=true]{biblatex}
+% %\addbibresource{references.bib}
+
+
+
+
+
+\title{Nanoscale Material Modelling
+\\
+\normalsize{Week 1}} % Main title and sub title. 
+
+\author{Ilija A. Gjerapić, S4437586 i.a.gjerapic@student.rug.nl} % Name, student number, email
+
+\supervisors{prof. dr. A. Giuntolli, prof. dr. J. Slawinski}
+
+\begin{document}
+
+\twocolumn[
+  \maketitle
+  \begin{@twocolumnfalse}
+
+  \end{@twocolumnfalse}
+]
+
+
+  
+
+\thispagestyle{firststyle}
+
+\begin{@twocolumnfalse}
+\section*{Assignment 1}
+\begin{enumerate}
+  \item Visualize Quantum Espresso simulations
+  \begin{figure}[h]
+    \centering 
+    \begin{subfigure}{0.33\textwidth}
+      
+    \end{subfigure}
+    \caption{The structure from file \texttt{Si.scf.in}. A lattice constant of 5.43 Angstrom. Showing a bond angle of 90$^\circ$. Showing a bond angle of 109.417$^\circ$}
+  \end{figure}
+
+  \item Visualize LAMMPS simulation 
+  \begin{itemize}
+    \item no-bonded:
+    \begin{itemize}
+      \item atoms: 228000
+      \item bonds: 216000 only of one type
+      \item atom types: 4. 156000 Type 1; 48000 Type 2; 0 Type 3; 24000 Type 4
+      \item Single molecule has 19 atoms
+      \item 12000 molecules using cluster analysis
+      \item Type 2 and 4 are reactive atoms. A molecule has two atoms of type two and 4 atoms of type 4.  
+    \end{itemize}
+    \item half-bonded
+    \begin{itemize}
+      \item bonds: 216000;
+      \item four types of bonds with a total of 226947 bonds; Type 1 is the bonds for a single molecule thus is same as before. Bond 2 is the bond between two atoms of Type 4 in the no reacted system. Remaining bonds (10947) are of this type. Atoms participating in this bonding are atoms of Type 3. Have 21894 Type 3 Atoms indicating that a bond of type 2 is restricted to two atoms. 
+      \item Number of clusters: 1418
+      \item NEED ANALYSIS ON NUMBER OF CLUSTERS OF EACH SIZE, but largest one contains 154337 atoms thus 8123 molecules. 
+    \end{itemize}
+
+
+  \end{itemize}
+  
+  The simulation consists of a 4 atom types and a single bond type. 
+\end{enumerate}
+
+\section*{Assignment 2}
+
+\section*{Assignment 3}
+
+\section*{Assignment 4}
+
+\end{@twocolumnfalse}
+
+
+\newpage
+% \printbibliography
+
+% \begin{appendices}
+%   \input{Appendix}
+% \end{appendices}
+
+\end{document}
+
+
+

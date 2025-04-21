@@ -1,0 +1,158 @@
+LAMMPS (2 Aug 2023 - Update 3)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+# 3D Lennard-Jones melt
+
+units 		    lj
+dimension 	    3
+atom_style 	    full
+boundary 	    p p p
+
+# Variables
+variable 	    N equal 4096    # number of particles
+variable 	    eta equal 0.45   # packing fraction
+variable 	    temp equal 1.0  # temperature
+
+variable 	    sigma equal 1.0
+variable 	    particle_volume equal (4.0/3.0)*PI*(0.5*${sigma})^3
+variable 	    particle_volume equal (4.0/3.0)*PI*(0.5*1)^3
+variable 	    total_volume equal ${N}*${particle_volume}
+variable 	    total_volume equal 4096*${particle_volume}
+variable 	    total_volume equal 4096*0.523598775598299
+variable 	    lbox equal (${total_volume}/${eta})^(1.0/3.0)
+variable 	    lbox equal (2144.66058485063/${eta})^(1.0/3.0)
+variable 	    lbox equal (2144.66058485063/0.45)^(1.0/3.0)
+variable 	    l equal 0.5*${lbox}
+variable 	    l equal 0.5*16.8286270362764
+variable        rand_seed equal 5468945
+
+region 		    box block -${l} ${l} -${l} ${l} -${l} ${l}
+region 		    box block -8.4143135181382 ${l} -${l} ${l} -${l} ${l}
+region 		    box block -8.4143135181382 8.4143135181382 -${l} ${l} -${l} ${l}
+region 		    box block -8.4143135181382 8.4143135181382 -8.4143135181382 ${l} -${l} ${l}
+region 		    box block -8.4143135181382 8.4143135181382 -8.4143135181382 8.4143135181382 -${l} ${l}
+region 		    box block -8.4143135181382 8.4143135181382 -8.4143135181382 8.4143135181382 -8.4143135181382 ${l}
+region 		    box block -8.4143135181382 8.4143135181382 -8.4143135181382 8.4143135181382 -8.4143135181382 8.4143135181382
+create_box	    1 box
+Created orthogonal box = (-8.4143135 -8.4143135 -8.4143135) to (8.4143135 8.4143135 8.4143135)
+  1 by 1 by 1 MPI processor grid
+create_atoms 	1 random ${N} ${rand_seed} box
+create_atoms 	1 random 4096 ${rand_seed} box
+create_atoms 	1 random 4096 5468945 box
+Created 4096 atoms
+  using lattice units in orthogonal box = (-8.4143135 -8.4143135 -8.4143135) to (8.4143135 8.4143135 8.4143135)
+  create_atoms CPU = 0.001 seconds
+mass		    1 1.0
+
+pair_style	    lj/cut 1.12
+pair_coeff	    1 1 1.0 1.0 1.12
+
+velocity	    all create ${temp} ${rand_seed}
+velocity	    all create 1 ${rand_seed}
+velocity	    all create 1 5468945
+
+neighbor	    0.8 bin
+neigh_modify	every 20 delay 0 check no
+
+minimize        0.0 1.0e-8 1000 100000
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 1.92
+  ghost atom cutoff = 1.92
+  binsize = 0.96, bins = 18 18 18
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut, perpetual
+      attributes: half, newton on
+      pair build: half/bin/newton
+      stencil: half/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 7.392 | 7.392 | 7.392 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   1              1.1157804e+17  0              1.1157804e+17  3.8357706e+17
+        91   1             -2.8888431      0             -1.3892093      3.5697157    
+Loop time of 0.105421 on 1 procs for 91 steps with 4096 atoms
+
+100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = linesearch alpha is zero
+  Energy initial, next-to-last, final = 
+    1.11578043064942e+17  -2.88884305698681  -2.88884305698681
+  Force two-norm initial, final = 3.6399383e+23 102.95217
+  Force max component initial, final = 1.935279e+23 15.862967
+  Final line search alpha, max atom move = 2.4329167e-09 3.8593278e-08
+  Iterations, force evaluations = 91 196
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.076153   | 0.076153   | 0.076153   |   0.0 | 72.24
+Bond    | 1.8935e-05 | 1.8935e-05 | 1.8935e-05 |   0.0 |  0.02
+Neigh   | 0.012614   | 0.012614   | 0.012614   |   0.0 | 11.97
+Comm    | 0.0031658  | 0.0031658  | 0.0031658  |   0.0 |  3.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 0.01347    |            |       | 12.78
+
+Nlocal:           4096 ave        4096 max        4096 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           3513 ave        3513 max        3513 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:          48456 ave       48456 max       48456 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 48456
+Ave neighs/atom = 11.830078
+Ave special neighs/atom = 0
+Neighbor list builds = 5
+Dangerous builds not checked
+reset_timestep  0
+
+fix 		    1 all nve
+fix 		    2 all langevin ${temp} ${temp} 0.5 ${rand_seed} zero yes
+fix 		    2 all langevin 1 ${temp} 0.5 ${rand_seed} zero yes
+fix 		    2 all langevin 1 1 0.5 ${rand_seed} zero yes
+fix 		    2 all langevin 1 1 0.5 5468945 zero yes
+
+dump            dump_lin all custom 1000000 traj_lin.dat id type xu yu zu vx vy vz fx fy fz
+dump_modify     dump_lin sort id
+
+variable 	    step equal logfreq(1,9,10)
+dump 		    dump_log all custom 1 traj_log.dat id type xu yu zu vx vy vz fx fy fz
+dump_modify     dump_log every v_step first yes
+dump_modify     dump_log sort id
+
+thermo		    10000
+thermo_style    custom step time temp vol press ebond epair eangle ke etotal enthalpy
+thermo_modify   line yaml format none
+
+run		        1000000
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Per MPI rank memory allocation (min/avg/max) = 5.767 | 5.767 | 5.767 Mbytes
+---
+keywords: ['Step', 'Time', 'Temp', 'Volume', 'Press', 'E_bond', 'E_pair', 'E_angle', 'KinEng', 'TotEng', 'Enthalpy', ]
+data:
+  - [0, 0, 0.999999999999999, 4765.9124107792, 3.569715745102, 0, -2.88884305698681, 0, 1.4996337890625, -1.38920926792431, 2.76434360622987, ]
+  - [10000, 50, 0.983101549178505, 4765.9124107792, 8.53739874627047, 0, -1.19688286856692, 0, 1.47429230122778, 0.277409432660854, 10.2111239445313, ]
+  - [20000, 100, 0.994162906381913, 4765.9124107792, 8.63460057413827, 0, -1.1877898775215, 0, 1.4908802862429, 0.303090408721396, 10.3499043829418, ]
+  - [30000, 150, 1.01150212738979, 4765.9124107792, 8.57255869601098, 0, -1.17940390101659, 0, 1.51688276794234, 0.337478866925748, 10.3121038379833, ]
+  - [40000, 200, 1.01508999442813, 4765.9124107792, 8.63290632513941, 0, -1.16107281459308, 0, 1.52226325458369, 0.361190439990608, 10.4060330659858, ]
+  - [50000, 250, 1.00489707579949, 4765.9124107792, 8.61011692073327, 0, -1.18591248531236, 0, 1.50697760939901, 0.321065124086648, 10.3393910739848, ]
+  - [60000, 300, 1.01990661917819, 4765.9124107792, 8.52032064856238, 0, -1.21484699281338, 0, 1.52948642780812, 0.314639434994741, 10.2284826778662, ]
+  - [70000, 350, 1.00372368671698, 4765.9124107792, 8.58649548698422, 0, -1.1737447947913, 0, 1.50521795548317, 0.331473160691868, 10.3223143243925, ]
+  - [80000, 400, 0.993953253371324, 4765.9124107792, 8.52224906547371, 0, -1.18132885204616, 0, 1.49056588350424, 0.309237031458075, 10.2253240892932, ]
+  - [90000, 450, 1.0242659602266, 4765.9124107792, 8.68325614448767, 0, -1.198617617183, 0, 1.53602384294236, 0.337406225759361, 10.4408335267819, ]
+  - [100000, 500, 1.01362206796736, 4765.9124107792, 8.68003644847787, 0, -1.16697414047914, 0, 1.52006190246325, 0.353087761984117, 10.4527687765877, ]
+  - [110000, 550, 1.02292882436568, 4765.9124107792, 8.45510662960986, 0, -1.19886369789684, 0, 1.53401862882475, 0.33515493092791, 10.1731182171875, ]
+  - [120000, 600, 0.987317537048897, 4765.9124107792, 8.58716050837902, 0, -1.17876694425701, 0, 1.48061473909249, 0.301847794835487, 10.2934627460651, ]
+  - [130000, 650, 0.978652795418204, 4765.9124107792, 8.35065402865265, 0, -1.23592586696158, 0, 1.46762079976961, 0.231694932808028, 9.9481220991359, ]
+  - [140000, 700, 0.988177887710625, 4765.9124107792, 8.58679624611166, 0, -1.17918674770814, 0, 1.48190495001526, 0.302718202307126, 10.293909315143, ]
+  - [150000, 750, 1.01989821920579, 4765.9124107792, 8.60275581862885, 0, -1.19195361057943, 0, 1.52947383092567, 0.337520220346242, 10.3472811390245, ]
+  - [160000, 800, 0.982513838484464, 4765.9124107792, 8.43966731598654, 0, -1.19592572581691, 0, 1.4734109504128, 0.277485224595887, 10.0974840537238, ]
+  - [170000, 850, 0.98249048206049, 4765.9124107792, 8.51199875862922, 0, -1.18311801937059, 0, 1.47337592433022, 0.290257904959629, 10.1944181892097, ]
+  - [180000, 900, 1.00067589506119, 4765.9124107792, 8.54673411402221, 0, -1.17841142097874, 0, 1.50064738413412, 0.322235963155383, 10.2668126686359, ]
+  - [190000, 950, 0.987343408986802, 4765.9124107792, 8.40144335890871, 0, -1.21243710918048, 0, 1.48065353752476, 0.268216428344286, 10.0437396638622, ]
+  - [200000, 1000,

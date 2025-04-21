@@ -1,0 +1,49 @@
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+
+###############################################################################
+Hábrók Cluster
+Job 16677884 for user s4437586
+Finished at: Thu Apr 17 12:00:48 CEST 2025
+
+Job details:
+============
+
+Job ID                         : 16677884
+Name                           : QE_Si
+User                           : s4437586
+Partition                      : parallelshort
+Nodes                          : omni20
+Number of Nodes                : 1
+Cores                          : 12
+Number of Tasks                : 12
+State                          : COMPLETED  
+Submit                         : 2025-04-17T11:59:29
+Start                          : 2025-04-17T12:00:33
+End                            : 2025-04-17T12:00:44
+Reserved walltime              : 00:05:00
+Used walltime                  : 00:00:11
+Used CPU time                  : 00:00:52 (Efficiency: 39.24%)
+% User (Computation)           : 96.51%
+% System (I/O)                 :  3.49%
+Total memory reserved          : 24000M
+Maximum memory used            : 0.00 
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################
