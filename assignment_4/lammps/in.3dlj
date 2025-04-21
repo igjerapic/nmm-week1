@@ -29,12 +29,10 @@ mass		    1 1.0
 ##########################################################
 #### LJ if coul_cut == 0.0, otherwise both LJ and Coulomb
 ##########################################################
-if "${coul_cut} == 0.0" then &
-    "pair_style	    lj/cut ${lj_cutoff}" & 
-    "pair_coeff	    1 1 1.0 1.0 ${lj_cutoff}" &
-else &
-    "set atom 1 charge 1.0" &
-    "pair_style  lj/cut/coul/cut ${lj_cutoff} ${coul_cut}"        
+${coul_cut} == 0.0
+pair_style	    lj/cut ${lj_cutoff}
+pair_coeff	    1 1 1.0 1.0 ${lj_cutoff}
+
 
 velocity	    all create ${temp} ${rand_seed}
 
@@ -42,6 +40,12 @@ neighbor	    0.8 bin
 neigh_modify	every 20 delay 0 check no
 
 minimize        0.0 1.0e-8 1000 100000
+
+if "${coul_cut} == 10.0" then &
+    "#variable rampCharge equal ramp(0.001, 1.0)"&
+    "set atom 1 charge 1.0" &
+    "pair_style  lj/cut/coul/cut ${lj_cutoff} ${coul_cut}" &
+    "pair_coeff 1 1 1.0 1.0"    
 reset_timestep  0
 
 fix 		    1 all nve
