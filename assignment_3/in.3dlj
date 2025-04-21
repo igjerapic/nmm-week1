@@ -7,7 +7,7 @@ boundary 	    p p p
 
 # Variables
 variable 	    N equal 4096    # number of particles
-variable 	    eta equal ${eta}   # packing fraction
+variable 	    eta equal ${ETA}   # packing fraction
 
 # set temp equal to the variable T, which is passed from the command line
 variable 	    temp equal ${T}  # temperature

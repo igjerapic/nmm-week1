@@ -5,7 +5,7 @@
 lammps_script_location="$(pwd)/in.3dlj"
 
 temperature=1.0
-for  eta in 0.7 0.6 0.5 0.4;; do
+for  eta in 0.7 0.6 0.5 0.4; do
 
     dir_name="temp${temperature}_eta${eta}"
     slurm_script="$dir_name/submit.sh"
@@ -21,7 +21,10 @@ for  eta in 0.7 0.6 0.5 0.4;; do
 
 module load LAMMPS/23Jun2022-foss-2021b-kokkos
 
-srun lmp -screen out.lammps -in $lammps_script_location -v T $temperature eta $eta
+srun lmp -screen out.lammps -in $lammps_script_location -v T $temperature ETA $eta
+
+# Uncomment when testing locally
+# lmp -screen out.lammps -in $lammps_script_location -v T $temperature -v ETA $eta
 EOL
 
     chmod +x "$slurm_script"
