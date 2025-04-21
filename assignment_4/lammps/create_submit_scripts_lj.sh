@@ -23,12 +23,12 @@ for lj_cut in 1.12 1.5 2.0 2.5; do
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=${ntasks}
 
-module load LAMMPS/23Jun2022-foss-2021b-kokkos
+# module load LAMMPS/23Jun2022-foss-2021b-kokkos
 
-srun lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
+# srun lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature -v ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
 
 # Uncomment when testing locally
-# mpirun -np ${ntasks} lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
+mpirun -np ${ntasks} lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature -v ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
 EOL
 
     chmod +x "$slurm_script"

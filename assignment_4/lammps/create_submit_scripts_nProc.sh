@@ -33,7 +33,7 @@ for coul_cut in 0.0 10.0; do
 
 # module load LAMMPS/23Jun2022-foss-2021b-kokkos
 
-# srun lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
+# srun lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature -v ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
 # Uncomment when testing locally
 mpirun -np ${ntasks} lmp -screen out.lammps -in $lammps_script_location -v num_part $num_part -v T $temperature -v ETA $eta -v lj_cutoff $lj_cut -v coul_cut $coul_cut
 EOL
