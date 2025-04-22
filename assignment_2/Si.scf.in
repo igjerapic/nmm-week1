@@ -1,12 +1,14 @@
  &control
-    calculation = 'scf'
+    calculation = 'scf' ! self consistent field calculation
     restart_mode='from_scratch',
     prefix='Si',
     pseudo_dir = './'
     outdir = './'
  /
  &system    
+    ! FCC latice with lattice const in Bohr, 2 total atoms in cell of single type
     ibrav=  2, celldm(1) =10.261213, nat=  2, ntyp= 1,
+    ! Energy cutoff of the wavefunctions
     ecutwfc =40.0
  /
  &electrons
@@ -21,4 +23,6 @@ ATOMIC_POSITIONS (alat)
  Si 0.00 0.00 0.00 
  Si 0.25 0.25 0.25 
 K_POINTS {automatic}
+  ! automatic generated uniform grid with (nk1 nk2 nk3) points and an offset by half a grid step (1 1 1)
+  ! Monkhorst-Pack grids
   4 4 4 1 1 1
