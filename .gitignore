@@ -4,3 +4,5 @@
 # Quantum Esspresso Outputs
 **/*/Si.scf_ecutw*
 
+# LAMMPS outputs
+**/*/temp*
