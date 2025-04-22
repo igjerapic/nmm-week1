@@ -9,7 +9,7 @@ eta=0.5
 num_part=4096 # number of particles
 ntasks=1      # number of processors used in mpirun -np M before 
 coul_cut=0.0
-for lj_cut in 1.12 1.5 2.0 2.5; do
+for lj_cut in 1.12 2.0 4.0 6.0; do
 
     dir_name="temp${temperature}_eta${eta}_LJ${lj_cut}_COUL${coul_cut}_N${num_part}_M${ntasks}"
     slurm_script="$dir_name/submit.sh"
@@ -18,7 +18,7 @@ for lj_cut in 1.12 1.5 2.0 2.5; do
     cat > "$slurm_script" <<EOL
 #!/bin/bash
 #SBATCH --job-name=run_temp${temperature}_eta${eta}_LJ${lj_cut}_COUL${coul_cut}_N${num_part}_M${ntasks}
-#SBATCH --time=01:00:00
+#SBATCH --time=03:00:00
 #SBATCH --partition=regularshort
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=${ntasks}
