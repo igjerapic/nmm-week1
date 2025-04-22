@@ -9,10 +9,11 @@
 ecut=$1
 nk=$2
 conv_thr=$3
+ntasks=$4
 
 potential_file="$(pwd)/Si.pbe-nl-rrkjus_psl.1.0.0.UPF"
 
-dir_name="Si.scf_ecutwfc${ecut}_nk${nk}_conv-thr${conv_thr}"
+dir_name="Si.scf_ecutwfc${ecut}_nk${nk}_conv-thr${conv_thr}_ntasks${ntasks}"
 input_script="$dir_name/Si.scf.in"
 echo "Creating PW input script and copying PW potenial file in $dir_name"
 

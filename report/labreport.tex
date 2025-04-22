@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper,onecollum]{labreport}
+\documentclass[10pt,a4paper]{labreport}
 \usepackage{csquotes}
 \usepackage{titlesec}
 \usepackage{ragged2e}
@@ -54,7 +54,6 @@
 
 \thispagestyle{firststyle}
 
-\begin{@twocolumnfalse}
 \section*{Assignment 1}
 \begin{enumerate}
   \item Visualize Quantum Espresso simulations
@@ -92,12 +91,21 @@
 \end{enumerate}
 
 \section*{Assignment 2}
-
+\begin{itemize}
+  \item Energy Convergence
+  \begin{itemize}
+    \item From initial input, have a final total energy of \texttt{-20.43868608 Ry}. See convergence up to 10$^{-8}$ Ry after 7 iterations, which inline with our \texttt{conv\_thr} setting for the convergence threshold. Can increase accuracy by making a smaller convergence threshold. When doing so with \texttt{conv\_thr=1.0d-12} get same energy (up to 10$^{-8}$ Ry), but taking 10 iterations rather than seven with  \texttt{conv\_thr=1.0d-8}.
+  \end{itemize}
+  \item Very size of k-points mesh
+  \begin{itemize}
+    \item 
+  \end{itemize}
+  \item Vary size of kinetic energy cutoff
+\end{itemize}
 \section*{Assignment 3}
 
 \section*{Assignment 4}
 
-\end{@twocolumnfalse}
 
 
 \newpage
