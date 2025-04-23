@@ -2,19 +2,37 @@ import re, yaml
 import pandas as pd
 import matplotlib.pyplot as plt
 
-try:
-    from yaml import CSafeLoader as Loader
-except ImportError:
-    from yaml import SafeLoader as Loader
+def main():
+    try:
+        from yaml import CSafeLoader as Loader
+    except ImportError:
+        from yaml import SafeLoader as Loader
 
-docs = ""
-with open("log.lammps") as f:
-    for line in f:
-        m = re.search(r"^(keywords:.*$|data:$|---$|\.\.\.$|  - \[.*\]$)", line)
-        if m: docs += m.group(0) + '\n'
+    docs = ""
+    with open("log.lammps") as f:
+        for line in f:
+            m = re.search(r"^(keywords:.*$|data:$|---$|\.\.\.$|  - \[.*\]$)", line)
+            if m: docs += m.group(0) + '\n'
 
-thermo = list(yaml.load_all(docs, Loader=Loader))
+    thermo = list(yaml.load_all(docs, Loader=Loader))
 
-df = pd.DataFrame(data=thermo[0]['data'], columns=thermo[0]['keywords'])
-fig = df.plot(x='Time', y=['Temp', 'Press', 'KinEng', 'E_pair'], ylabel='Energy in LJ')
-# plt.savefig('thermo_bondeng.png')
+    df = pd.DataFrame(data=thermo[0]['data'], columns=thermo[0]['keywords'])
+    
+    df.to_pickle("thermo.pkl")
+    keywords = [["Temp"], ["Press"], ['KinEng', 'E_pair']]
+    labels = ["Temp", "Press", 'Energy']
+
+    for y, ylabel in zip(keywords, labels):
+        fig = df.plot(x="Time", y=y, ylabel=ylabel, figsize=(6,6))
+        plt.show()
+    # fig_temp = df.plot(x="Time", y="Temp", ylabel="Temp", figsize=(6,6))
+    # #plt.savefig('thermo_bondeng.png')
+    # plt.show()
+
+    # fig_Press = df.plot(x="Time", y="Press", ylabel="Press")
+    # plt.show()
+
+    # fig_energy = df.plot(x="Time", y=['KinEng', 'E_pair'], ylabel="Energy in Reduced Units")
+    # plt.show()
+if __name__ == '__main__':
+    main()
