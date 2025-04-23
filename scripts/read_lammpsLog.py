@@ -2,6 +2,21 @@ import re, yaml
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from cycler import cycler
+plt.style.use('../../scripts/default.mplstyle')
+
+plt.rcParams['axes.prop_cycle'] = plt.cycler(cycler(color = ['#332288', 
+                                    '#CC6677',
+                                    '#88CCEE',
+                                    '#DDCC77', 
+                                    '#117733', 
+                                    '#882255', 
+                                    '#44AA99', 
+                                    '#999933', 
+                                    '#AA4499',
+                                    '#DDDDDD'
+                                ]))
+
 def main():
     try:
         from yaml import CSafeLoader as Loader
@@ -23,7 +38,8 @@ def main():
     labels = ["Temp", "Press", 'Energy']
 
     for y, ylabel in zip(keywords, labels):
-        fig = df.plot(x="Time", y=y, ylabel=ylabel, figsize=(6,6))
+        fig = df.plot(x="Time", y=y, ylabel=ylabel)
+        plt.tight_layout()
         plt.show()
     # fig_temp = df.plot(x="Time", y="Temp", ylabel="Temp", figsize=(6,6))
     # #plt.savefig('thermo_bondeng.png')
