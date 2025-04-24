@@ -34,6 +34,21 @@ def main():
     plt.tight_layout()
     plt.savefig("etot_vs_nkpoints.svg", dpi=200)
 
+    plt.clf()
+    etot_vs_it_convthr1d_8 = np.loadtxt("si.etot_conv_1d-8").T
+    plt.plot([i for i in range(1, len(etot_vs_it_convthr1d_8) + 1)],etot_vs_it_convthr1d_8)
+    plt.xlabel("Iteration")
+    plt.ylabel("Total Energy (Ry)")
+    plt.tight_layout()
+    plt.savefig("etot_conv_1d-8.svg", dpi=200)
+
+    plt.clf()
+    etot_vs_it_convthr1d_12 = np.loadtxt("si.etot_conv_1d-12").T
+    plt.plot([i for i in range(1, len(etot_vs_it_convthr1d_12) + 1)],etot_vs_it_convthr1d_12)
+    plt.xlabel("Iteration")
+    plt.ylabel("Total Energy (Ry)")
+    plt.tight_layout()
+    plt.savefig("etot_conv_1d-12.svg", dpi=200)
 
 if __name__=="__main__":
     main()
