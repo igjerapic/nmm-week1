@@ -7,6 +7,7 @@
 \usepackage{longtable}
 \usepackage{rotating}
 \usepackage{xurl}
+\usepackage{physics}
 \usepackage{caption}
 \usepackage{wrapfig}
 \usepackage{tabularray}
@@ -21,7 +22,7 @@
 \usepackage{lipsum}
 \usepackage{booktabs}
 \usepackage{enumerate}
-\usepackage[justification=centering]{caption}
+\usepackage[justification=justified]{caption}
 \usepackage[nottoc]{tocbibind}
 %  \usepackage[
 % backend=biber,
@@ -42,54 +43,90 @@
 
 \begin{document}
 
-\twocolumn[
-  \maketitle
-  \begin{@twocolumnfalse}
 
-  \end{@twocolumnfalse}
-]
+\maketitle
+
 
 
   
 
 \thispagestyle{firststyle}
-
-\section*{Assignment 1}
+\newpage
+\section{Assignment 1}
 \begin{enumerate}
-  \item Visualize Quantum Espresso simulations
+  \item Visualize Quantum Espresso Simulations
+  
+  The visualization of the \texttt{Si.sci.in} input file is shown in Figure \ref{fig:ass1_cryst}. 
   \begin{figure}[h]
     \centering 
-    \begin{subfigure}{0.33\textwidth}
-      
-    \end{subfigure}
-    \caption{The structure from file \texttt{Si.scf.in}. A lattice constant of 5.43 Angstrom. Showing a bond angle of 90$^\circ$. Showing a bond angle of 109.417$^\circ$}
+    \includegraphics[width = 0.7\textwidth]{figs/ass1_Si_cryst.png}
+    \caption{\textbf{(a)} The conventional FCC unit cell with a two atom basis. The lattice constant was found to be 5.43 \AA. (b) The primitive unit cell obtained from the input file. A lattice constant of 3.8396 {\AA} was found, with a bond angle of 60$^\circ$.}
+    \label{fig:ass1_cryst}
   \end{figure}
 
   \item Visualize LAMMPS simulation 
-  \begin{itemize}
-    \item no-bonded:
-    \begin{itemize}
-      \item atoms: 228000
-      \item bonds: 216000 only of one type
-      \item atom types: 4. 156000 Type 1; 48000 Type 2; 0 Type 3; 24000 Type 4
-      \item Single molecule has 19 atoms
-      \item 12000 molecules using cluster analysis
-      \item Type 2 and 4 are reactive atoms. A molecule has two atoms of type two and 4 atoms of type 4.  
-    \end{itemize}
-    \item half-bonded
-    \begin{itemize}
-      \item bonds: 216000;
-      \item four types of bonds with a total of 226947 bonds; Type 1 is the bonds for a single molecule thus is same as before. Bond 2 is the bond between two atoms of Type 4 in the no reacted system. Remaining bonds (10947) are of this type. Atoms participating in this bonding are atoms of Type 3. Have 21894 Type 3 Atoms indicating that a bond of type 2 is restricted to two atoms. 
-      \item Number of clusters: 1418
-      \item NEED ANALYSIS ON NUMBER OF CLUSTERS OF EACH SIZE, but largest one contains 154337 atoms thus 8123 molecules. 
-    \end{itemize}
-
-
-  \end{itemize}
   
-  The simulation consists of a 4 atom types and a single bond type. 
-\end{enumerate}
+  An overview of the total number of bonds and atoms can for each output file can be found in Table \ref{tab:ass1_lammps-bonds} and \ref{tab:ass1_lammps-atoms}, respectively.
+  The types of atoms are clarified by considering a single isolated molecule in Figure \ref{fig:ass1_molecules}. Mainly, Type 1 corresponds to the backbone of the molecule, and Type 2 and 4 correspond to reactive atoms. Further analysis of the \texttt{half\_reacted.data} file showed that Type 3 atoms correspond to reacted Type 2 atoms, see Figure \ref{fig:ass1_molecules}. This reaction is also captured in the introduction of Type 2 bonds, as seen by the number of Type 2 bonds being exactly half of the number of Type 3 atoms. It is important to note, that this suggests that the Type 2 bond is restricted to two atoms. 
 
+  \begin{table}[h]
+    \caption{An overview of the number of each bond type for the output files considered.}
+    \label{tab:ass1_lammps-bonds}
+    \centering
+    \begin{tabular}{cccc}
+      \hline
+    \textbf{Bond Type}      & \textbf{No-reacted}     & \textbf{Half-reacted}   & \textbf{Full-reacted}   \\
+    \hline
+    1 & 216000 & 216000 & 216000 \\
+    2 & 0      & 10947  & 18861  \\
+    3 & 0      & 0      & 0      \\
+    4 & 0      & 0      & 0      \\ \hline
+    \textbf{Total} & 216000 & 226947 & 234861 \\ \hline
+    \end{tabular}
+  \end{table}
+
+  \begin{table}[h]
+    \caption{An overview of the number of each atom type for the output files considered }
+    \label{tab:ass1_lammps-atoms}
+    \centering
+    \begin{tabular}{cccc}
+      \hline
+    \textbf{Atom Type}      & \textbf{No-reacted}     & \textbf{Half-reacted}   & \textbf{Full-reacted}   \\
+    \hline
+    1 & 156000 & 156000 & 156000 \\
+    2 & 48000  & 26106  & 10278  \\
+    3 & 0      & 21894  & 37722  \\
+    4 & 24000  & 24000  & 24000  \\ \hline
+    \textbf{Total} & 228000 & 228000 & 228000 \\ \hline
+    \end{tabular}
+  \end{table}
+  
+  Using the \texttt{expression selection} feature in \texttt{Ovito} on the \texttt{no\_reaction.data} file, a single, non-bonded, molecule was found to be made up of 19 atoms. Further clustered-by-bonds analysis, Figure \ref{fig:cluster_analysis}, showed that the initial no-reaction configuration consisted of 12000 molecules. This also demonstrates that the system shows no polydispersity as 1200 $\times$ 19 gives the total number of atoms in the system. Similar clustering analysis on the half-reacted system revealed 1418 clusters with the largest consisting of 8123 molecules (154337) atoms while a single molecule was found for the full-reacted system provided by the \texttt{full\_reacted.data} file. 
+
+  Instead of full molecules, the number of new chains formed by the reactions can be considered by first selecting the reacted atoms (Type 3) along with the atom connecting it to the main chain (Type 4) and then performing a similar cluster-by-bonds analysis, Figure \ref{fig:ass1_full_reaction}(a). 
+  Such analysis reveals 6424 "clusters", with the largest consisting of 396 atoms. The distribution of the new chain sizes are shown in Figure \ref{fig:ass1_full_reaction}(b).
+
+  \begin{figure}[htbp]
+    \centering 
+    \includegraphics[width = 0.7\textwidth]{figs/ass1_molecules.png}
+    \caption{Two isolated molecules demonstrated each atom type. The left shows an isolated molecule extracted from the non-reacted system, while the right was extracted from the half-reacted system.}
+    \label{fig:ass1_molecules}
+  \end{figure}
+  \begin{figure}[htbp]
+    \centering 
+    \includegraphics[width = 0.9\textwidth]{figs/ass1_molecule_clusters.png}
+    \caption{Clusters of bonded atoms, considered molecules, as determined using \texttt{cluster by bonds} in \texttt{Ovito} on the different systems considered. Different colors represent a different molecule.}
+    \label{fig:cluster_analysis}
+  \end{figure}
+  \begin{figure}[htbp]
+    \centering 
+    \includegraphics[width = 0.7\textwidth]{figs/ass1_full-reaciton.png}
+    \caption{A cluster analysis by bonds for selecting atoms of Type 3 and Type 4. (a) Shows the different clusters (bonds only) with each color representing a separate cluster. (b) Shows the distribution of the cluster sizes using 10 bins. }
+    \label{fig:ass1_full_reaction}
+  \end{figure}
+  
+\end{enumerate}
+\newpage
 \section*{Assignment 2}
 \begin{itemize}
   \item Energy Convergence
@@ -102,6 +139,10 @@
   \end{itemize}
   \item Vary size of kinetic energy cutoff
 \end{itemize}
+
+
+
+
 \section*{Assignment 3}
 
 \section*{Assignment 4}
