@@ -31,7 +31,8 @@ def main():
     ax[0,0].set_ylabel("Count")
     plt.title("")
     plt.tight_layout()
-    plt.savefig("full_bonded_new-chain_counts.svg", dpi=300)
+    plt.show()
+    #plt.savefig("full_bonded_new-chain_counts.svg", dpi=300)
 
 if __name__=="__main__":
     main()
